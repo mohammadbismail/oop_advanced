@@ -21,4 +21,13 @@ public class Mammal {
 	public void decreaseBy10() {
 		this.energyLevel -= 10;
 	}
+	public void decreaseBy50() {
+		this.energyLevel -=50;
+	}
+	public void increaseBy25() {
+		this.energyLevel +=25;
+	}
+	public void setEnergy(double myEnergy) {
+		this.energyLevel = myEnergy;
+	}
 }
