@@ -7,10 +7,9 @@ public class User {
     
     //Constructor
     public User(Integer id) {
-		super();
 		this.id = id;
 	}
-    // Getters & Setters
+	// Getters & Setters
 	public Integer getId() {
 		return id;
 	}

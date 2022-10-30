@@ -8,61 +8,70 @@ public class AdminUser extends User implements HIPAACompliantUser, HIPAAComplian
     private String role;
     private ArrayList<String> securityIncidents;
     
-    // TO DO: Implement a constructor that takes an ID and a role
-    // TO DO: Implement HIPAACompliantUser!
-    // TO DO: Implement HIPAACompliantAdmin!
-    public AdminUser(Integer myId, Integer employeeID, String role, ArrayList<String> securityIncidents) {
-    	super(myId);
-    	this.employeeID = employeeID;
+    // Constructor inherited from Parent via super & added extra member variables 
+ 
+    public AdminUser(Integer id, String role) {
+    	super(id);
+    	this.employeeID = id;
     	this.role = role;
-    	this.securityIncidents = securityIncidents;
-    }
-    public void newIncident(String notes) {
-        String report = String.format(
-            "Datetime Submitted: %s \n,  Reported By ID: %s\n Notes: %s \n", 
-            new Date(), this.id, notes
-        );
-        securityIncidents.add(report);
-    }
-	public void authIncident() {
-        String report = String.format(
-            "Datetime Submitted: %s \n,  ID: %s\n Notes: %s \n", 
-            new Date(), this.id, "AUTHORIZATION ATTEMPT FAILED FOR THIS USER"
-        );
-        securityIncidents.add(report);
-    }
-    
-	public AdminUser(Integer myId) {
-		super(myId);
 	}
-
+ 
+    //Implementing HIPAACompliantAdmin Interface abstract methods
+    
+    
 	@Override
 	public ArrayList<String> reportSecurityIncidents() {
-		return 
-	
+		return securityIncidents;
 	}
 
+	//Implementing HIPAACompliantUser Interface abstract methods
 	@Override
 	public boolean assignPin(int pin) {
 		String strPin = Integer.toString(pin);
 		int pinLen = strPin.length();
 		if (pinLen == 6) {
 			this.setPin(pin);
+			System.out.println("correct!, Pin is 6 digits");
 			return true;
 		} else {
+			System.out.println("Wrong! Pin should be 6 digits!");
 			return false;
 		}
 	}
-
+	
 	@Override
 	public boolean accessAuthorized(Integer confirmedAuthID) {
-		if (this.getId() == confirmedAuthID) {
-			return true;
-		} else {
-			return false;
+		try {
+			if (this.getId() == confirmedAuthID) {
+				System.out.println("ID is correct");
+				this.authIncident();
+				return true;
+			} else {
+				System.out.println("ID is wrong!");
+				return false;
+			}
 		}
+		 catch (Exception e) {
+			 return false;
+		 }
+		
 	}
-	//Getters & Setters 
+	
+	//Concrete methods
+	public void newIncident(String notes) {
+        String report = String.format(
+            "Datetime Submitted: %s \n,  Reported By ID: %s\n Notes: %s \n", 
+            new Date(), this.id, notes
+        );
+        securityIncidents.add(report);
+    }
+    public void authIncident() {
+        String report = String.format(
+            "Datetime Submitted: %s \n,  ID: %s\n Notes: %s \n", 
+            new Date(), this.getId(), "AUTHORIZATION ATTEMPT FAILED FOR THIS USER");
+        securityIncidents.add(report);
+    }
+	// Getters & Setters 
 	public Integer getEmployeeID() {
 		return employeeID;
 	}
