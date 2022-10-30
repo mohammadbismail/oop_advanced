@@ -6,6 +6,7 @@ public class Mammal {
 	//Constructors 
 	public Mammal(){
 		this.energyLevel = 100;
+//		System.out.println("One Gorilla has been initiated");
 	}
 	// Getters & Setters 
 	public double displayEnergy() {
